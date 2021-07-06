@@ -6,7 +6,7 @@ A simple program to illustrate PID control.
 
 ```bash
 git clone https://github.com/jujhaar2409/LineFollower.git
-cd LineFollower
+cd line-follower
 pip install -r requirements.txt
 python main.py
 ```
