@@ -1,16 +1,48 @@
-# This is a sample Python script.
+import pygame
 
-# Press ⌃F5 to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+pygame.init()
 
+WIDTH = 800
+HEIGHT = 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Line Follower")
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press F9 to toggle the breakpoint.
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
+YELLOW = (255, 255, 255)
 
+DARK_GREY = (190, 190, 190)
+LIGHT_GREY = (212, 212, 212)
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+BG_COLOR = DARK_GREY
+PAINT = LIGHT_GREY
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+screen.fill(BG_COLOR)
+pygame.display.flip()
+
+mouse = pygame.mouse
+fpsClock = pygame.time.Clock()
+
+canvas = screen.copy()
+
+loop = True
+while loop:
+    left_pressed, middle_pressed, right_pressed = mouse.get_pressed(3)
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            loop = False
+        elif left_pressed:
+            pygame.draw.circle(canvas, PAINT, (pygame.mouse.get_pos()), 30)
+
+    screen.fill(BG_COLOR)
+    screen.blit(canvas, (0, 0))
+    # pygame.draw.circle(screen, PAINT, (mouse.get_pos()), 30)
+    print(screen.get_at(mouse.get_pos()))
+
+    pygame.display.update()
+
+pygame.quit()
