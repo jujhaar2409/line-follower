@@ -179,7 +179,7 @@ def PID(perp, dist):
     # weight_a = 0
     weight_d = 1
 
-    dist_PID, dist_integral = get_PID_expr(Kp=0.001, Kd=0.5t , Ki=0, param=dist,prev_integral=dist_integral,  prev_param=prev_dist)
+    dist_PID, dist_integral = get_PID_expr(Kp=0.001, Kd=0.5, Ki=0, param=dist,prev_integral=dist_integral,  prev_param=prev_dist)
     # angle_PID, angle_integral = get_PID_expr(Kp=0.05, Kd=0.5, Ki=0, param=angle,prev_integral=angle_integral,  prev_param=prev_angle)
 
     # ret = min(weight_d * dist_PID + weight_a * angle_PID, max_angle)
