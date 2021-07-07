@@ -30,7 +30,7 @@ mouse = pygame.mouse
 canvas = screen.copy()
 
 # INITIAL_POINT = pygame.math.Vector2((100, 400))
-points = [pygame.math.Vector2(100, 400)]
+points = []
 # points = []
 
 THRESHOLD = 0.001
@@ -40,20 +40,22 @@ TIME_PER_FRAME = 50
 class Car:
     def __init__(self, surface):
         self.direction = pygame.Vector2(1, 0)
+        self.is_set = False
         self.pos = pygame.math.Vector2(100, 400)
         self.theta = 0  # angle with the horizontal
         self.surface = surface
         # self.rect = pygame.Rect(50, 50, 100, 50)
         self.speed = 1.5
-        self.radius = 10
+        self.radius = 15
         # self.img = pygame.image.load(os.path.join('img', 'car.png'))
         # self.img = pygame.transform.scale(pygame.transform.rotate(self.img, -45), (50, 50))
 
     def draw(self):
-        self.step()
+        if len(points) > 1:
+            self.step()
         # pygame.draw.rect(self.surface, BLACK, self.rect)
         pygame.draw.circle(self.surface, BLACK, self.pos, self.radius, width=1)
-        pygame.draw.line(self.surface, BLACK, self.pos, self.pos + self.direction * 50, 2)
+        pygame.draw.line(self.surface, BLACK, self.pos, self.pos + self.direction * 30, 2)
         # pygame.draw.line(self.surface, BLACK, (200, 200), pygame.Vector2(200, 200) + self.direction * 100)
         # self.surface.blit(self.img, self.pos)
 
@@ -80,6 +82,17 @@ class Car:
             #     ang = 270 - dotprod
             return ang
         return 0
+
+    def set_car(self):
+        if len(points) < 10 or car.is_set:
+            return
+        self.pos = pygame.Vector2(list(points[0]))
+        for i, point in enumerate(points):
+            if (point - points[0]).magnitude() != 0:
+                self.direction = point - points[0]
+                self.direction /= self.direction.magnitude()
+                self.is_set = True
+                return
 
 
 prev_x = None  # at start there is no previous point
@@ -175,15 +188,15 @@ def PID(perp, dist):
     # if abs(angle - math.pi / 2) < math.pi/16:
     #     return -0.02
 
-    # max_angle = 0.12
+    max_angle = 0.025
     # weight_a = 0
     weight_d = 1
 
-    dist_PID, dist_integral = get_PID_expr(Kp=0.001, Kd=0.5, Ki=0, param=dist,prev_integral=dist_integral,  prev_param=prev_dist)
+    dist_PID, dist_integral = get_PID_expr(Kp=0.001, Kd=1, Ki=0, param=dist,prev_integral=dist_integral,  prev_param=prev_dist)
     # angle_PID, angle_integral = get_PID_expr(Kp=0.05, Kd=0.5, Ki=0, param=angle,prev_integral=angle_integral,  prev_param=prev_angle)
 
     # ret = min(weight_d * dist_PID + weight_a * angle_PID, max_angle)
-    ret = weight_d * dist_PID
+    ret = min(weight_d * dist_PID, max_angle)
 
     prev_dist = dist
     # prev_angle = angle
@@ -203,16 +216,15 @@ while loop:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             loop = False
-        # if left_pressed:
-        #     car.turn(0.1)
-        # if right_pressed:
 
-    airbrush()
+    airbrush(brushSize=30)
     car.draw()
-    if len(points) != 1:
+    if len(points) > 1:
         perp, dist = get_perp(car.pos)
         angle = PID(perp, dist)
         car.turn(angle)
+    if not car.is_set and len(points) > 1:
+        car.set_car()
     pygame.display.flip()
 
 pygame.quit()
