@@ -1,7 +1,6 @@
 import pygame
 import math
-
-# import os
+import os
 
 pygame.init()
 
@@ -47,17 +46,18 @@ class Car:
         # self.rect = pygame.Rect(50, 50, 100, 50)
         self.speed = 2
         self.radius = 15
-        # self.img = pygame.image.load(os.path.join('img', 'car.png'))
+        self.img_original = pygame.transform.scale(pygame.image.load(os.path.join('imgs', 'car.png')), (100, 100))
+        self.img = self.img_original
         # self.img = pygame.transform.scale(pygame.transform.rotate(self.img, -45), (50, 50))
 
     def draw(self):
         if len(points) > 1:
             self.step()
         # pygame.draw.rect(self.surface, BLACK, self.rect)
-        pygame.draw.circle(self.surface, BLACK, self.pos, self.radius, width=1)
-        pygame.draw.line(self.surface, BLACK, self.pos, self.pos + self.direction * 30, 2)
+        # pygame.draw.circle(self.surface, BLACK, self.pos, self.radius, width=1)
+        # pygame.draw.line(self.surface, BLACK, self.pos, self.pos + self.direction * 30, 2)
         # pygame.draw.line(self.surface, BLACK, (200, 200), pygame.Vector2(200, 200) + self.direction * 100)
-        # self.surface.blit(self.img, self.pos)
+        self.surface.blit(self.img, self.pos - pygame.Vector2(self.img.get_size()) / 2)
 
     def step(self):
         # self.rect = self.rect.move(self.direction)
@@ -67,6 +67,8 @@ class Car:
     def turn(self, theta):
         self.theta += theta
         self.direction = pygame.Vector2(math.cos(self.theta), math.sin(self.theta))
+        self.img = pygame.transform.rotate(self.img_original, - 180 * self.theta / math.pi)
+        self.img = self.img.convert_alpha()
         # self.img = pygame.transform.rotate(self.img, -180 * theta / math.pi)
         # self.img = pygame.transform.scale(pygame.transform.rotate(self.img, -180 * theta / math.pi), (50, 50))
 
@@ -93,7 +95,6 @@ class Car:
                 self.direction /= self.direction.magnitude()
                 self.is_set = True
                 return
-
 
 prev_x = None  # at start there is no previous point
 prev_y = None  # at start there is no previous point
