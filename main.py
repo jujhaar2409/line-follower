@@ -45,7 +45,7 @@ class Car:
         self.theta = 0  # angle with the horizontal
         self.surface = surface
         # self.rect = pygame.Rect(50, 50, 100, 50)
-        self.speed = 1.5
+        self.speed = 2
         self.radius = 15
         # self.img = pygame.image.load(os.path.join('img', 'car.png'))
         # self.img = pygame.transform.scale(pygame.transform.rotate(self.img, -45), (50, 50))
@@ -192,7 +192,7 @@ def PID(perp, dist):
     # weight_a = 0
     weight_d = 1
 
-    dist_PID, dist_integral = get_PID_expr(Kp=0.001, Kd=1, Ki=0, param=dist,prev_integral=dist_integral,  prev_param=prev_dist)
+    dist_PID, dist_integral = get_PID_expr(Kp=0.005, Kd=3, Ki=0, param=dist,prev_integral=dist_integral,  prev_param=prev_dist)
     # angle_PID, angle_integral = get_PID_expr(Kp=0.05, Kd=0.5, Ki=0, param=angle,prev_integral=angle_integral,  prev_param=prev_angle)
 
     # ret = min(weight_d * dist_PID + weight_a * angle_PID, max_angle)
