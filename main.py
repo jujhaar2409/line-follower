@@ -4,8 +4,8 @@ import os
 
 pygame.init()
 
-WIDTH = 1200
-HEIGHT = 800
+WIDTH = 800
+HEIGHT = 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Line Follower")
 
@@ -44,7 +44,7 @@ class Car:
         self.theta = 0  # angle with the horizontal
         self.surface = surface
         # self.rect = pygame.Rect(50, 50, 100, 50)
-        self.speed = 2
+        self.speed = 1.5
         self.radius = 15
         self.img_original = pygame.transform.scale(pygame.image.load(os.path.join('imgs', 'car.png')), (100, 100))
         self.img = self.img_original
@@ -193,7 +193,7 @@ def PID(perp, dist):
     # weight_a = 0
     weight_d = 1
 
-    dist_PID, dist_integral = get_PID_expr(Kp=0.005, Kd=3, Ki=0, param=dist,prev_integral=dist_integral,  prev_param=prev_dist)
+    dist_PID, dist_integral = get_PID_expr(Kp=0.01, Kd=3, Ki=0, param=dist,prev_integral=dist_integral,  prev_param=prev_dist)
     # angle_PID, angle_integral = get_PID_expr(Kp=0.05, Kd=0.5, Ki=0, param=angle,prev_integral=angle_integral,  prev_param=prev_angle)
 
     # ret = min(weight_d * dist_PID + weight_a * angle_PID, max_angle)
