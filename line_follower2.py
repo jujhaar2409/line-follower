@@ -19,7 +19,7 @@ botImg = pygame.image.load("bot.jpg")
 botCurrent = pygame.Vector2()
 botCurrent.xy = 146, 320
 botEarlier = pygame.Vector2()
-botEarlier.xy = 146, 322
+botEarlier.xy = 146, 320.2
 botVel = pygame.Vector2()  # (velocity) vector along direction of bot
 botVelPer = pygame.Vector2()  # perpendicular vector to botVel
 botSize = 60  # diameter of bot
@@ -62,9 +62,9 @@ def PID(errorNew, errorEarlier):
     global derivative, integral
     derivative = errorNew - errorEarlier
     integral += errorNew
-    Kp = 0.01
-    Kd = 0.01
-    Ki = 0.01
+    Kp = 0.001
+    Kd = 0.0
+    Ki = 0.0
     drift_vel = Kp * errorNew + Kd * derivative + Ki * integral
     return drift_vel
 
