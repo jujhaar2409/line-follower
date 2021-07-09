@@ -55,16 +55,16 @@ def Distance(sensorVal):
         1] + 0 * sensorVal[1]
     a = sensorVal[0] + sensorVal[1] + sensorVal[2] + sensorVal[3] + sensorVal[4] + sensorVal[5]
     print(a)
-    return dist / a
+    return dist / (a + 0.00001)
 
 
 def PID(errorNew, errorEarlier):
     global derivative, integral
     derivative = errorNew - errorEarlier
     integral += errorNew
-    Kp = 0.001
-    Kd = 0.0
-    Ki = 0.0
+    Kp = 0.005
+    Kd = 0.00000001
+    Ki = 0.0000001
     drift_vel = Kp * errorNew + Kd * derivative + Ki * integral
     return drift_vel
 
@@ -84,8 +84,8 @@ while running:
 
     # setting position of sensors
     for i in range(no_of_sensors):
-        sensorPosX.append(botCurrent.x + botVelPer.x * (-botSize / 2 + botSize / 5 * i))
-        sensorPosY.append(botCurrent.y + botVelPer.y * (-botSize / 2 + botSize / 5 * i))
+        sensorPosX.append(botCurrent.x + botVelPer.x * (-botSize / 2 + botSize / (no_of_sensors - 1) * i))
+        sensorPosY.append(botCurrent.y + botVelPer.y * (-botSize / 2 + botSize / (no_of_sensors - 1) * i))
 
     # getting the colour under sensors
     for i in range(no_of_sensors):
@@ -96,14 +96,18 @@ while running:
     errorNew = distance - centre
     drift_Vel = PID(errorNew, errorEarlier)
 
-    screen.blit(botImg, (botCurrent.x-30, botCurrent.y-30))
+    screen.blit(botImg, (botCurrent.x - botSize / 2, botCurrent.y - botSize / 2))
 
     botEarlier = botCurrent
+    if pygame.math.Vector2.magnitude(botVel) > 1:
+        pygame.math.Vector2.normalize_ip(botVel)
+
     botCurrent = botCurrent + botVel + botVelPer * (-drift_Vel)
     print(botCurrent)
     print(botVel)
     print(botVelPer)
     print(sensorVal)
+    print(errorNew)
     sensorVal = []  # take values 0(black) or 1(white)
     sensorCol = []
     sensorPosX = []  # position of sensors
