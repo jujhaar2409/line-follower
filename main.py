@@ -16,11 +16,11 @@ GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 YELLOW = (255, 255, 255)
 
-DARK_GREY = (190, 190, 190)
-LIGHT_GREY = (212, 212, 212)
+DARK_GREY = (90, 90, 90)
+LIGHT_GREY = (180, 180, 180)
 
-BG_COLOR = DARK_GREY
-PAINT = LIGHT_GREY
+BG_COLOR = LIGHT_GREY
+PAINT = DARK_GREY
 
 screen.fill(BG_COLOR)
 pygame.display.flip()
@@ -156,7 +156,7 @@ def get_perp(pos):
     # dist, index = get_closest_point(mouse_vector)
     the_dist, index = get_closest_point(pos)
     # pygame.draw.line(screen, BLACK, mouse_vector, points[index])
-    pygame.draw.line(screen, BLACK, pos, points[index])
+    # pygame.draw.line(screen, BLACK, pos, points[index])
     # perp = mouse_vector - points[index]
     the_perp = pos - points[index]
     return the_perp, the_dist
