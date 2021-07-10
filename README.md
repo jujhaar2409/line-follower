@@ -9,7 +9,7 @@ Download the file main.py from this repo and then open a terminal at the locatio
 
 ```bash
 pip install pygame
-python main.py
+python line_follower_dist.py
 ```
 
 ## Resources
