@@ -60,14 +60,6 @@ class Car:
         self.img = pygame.transform.rotate(self.img_original, - 180 * self.theta / math.pi)
         self.img = self.img.convert_alpha()
 
-    # def get_angle(self, vec):
-    #     if vec.magnitude() > THRESHOLD:
-    #         dotprod = math.asin(self.pos.dot(vec) / (vec.magnitude() * self.pos.magnitude()))
-    #         crossprod = self.direction.x * vec.y - self.direction.y * vec.x
-    #         ang = math.copysign(dotprod, crossprod)
-    #         return ang
-    #     return 0
-
     def set_car(self):
         if len(points) < 10 or car.is_set:
             return
@@ -76,6 +68,7 @@ class Car:
             if (point - points[0]).magnitude() != 0:
                 self.direction = point - points[0]
                 self.direction /= self.direction.magnitude()
+                self.turn(math.atan2(self.direction.y, self.direction.x))
                 self.is_set = True
                 return
 
@@ -115,53 +108,6 @@ def draw_path(brushSize=20, steps=200):
         prev_x = None
         prev_y = None
 
-#
-# def get_closest_point(pos):
-#     min_dist = points[0].distance_to(pos)
-#     min_index = 0
-#     for j, point in enumerate(points):
-#         curr_dist = point.distance_to(pos)
-#         if curr_dist < min_dist:
-#             min_dist = curr_dist
-#             min_index = j
-#     return min_dist, min_index
-#
-#
-# def get_perp(pos):
-#     the_dist, index = get_closest_point(pos)
-#     the_perp = pos - points[index]
-#     return the_perp, the_dist
-#
-#
-# def get_PID_expr(Ki, Kp, Kd, param, prev_param, prev_integral, max_derivative=math.inf):
-#     derivative = Kd * min((param - prev_param) / TIME_PER_FRAME, max_derivative)
-#     integral = prev_integral + Ki * (param - prev_param) * TIME_PER_FRAME
-#     proportion = Kp * param
-#     ret = - proportion - derivative - integral
-#     return ret, integral
-#
-#
-# prev_dist = 0
-# dist_integral = 0
-#
-#
-# def PID(perp, dist):
-#     global prev_dist
-#     global dist_integral
-#
-#     angle = car.get_angle(perp)
-#     dist = math.copysign(dist, angle)
-#
-#     max_angle = 0.025
-#     weight_d = 1
-#
-#     dist_PID, dist_integral = get_PID_expr(Kp=0.01, Kd=3, Ki=0, param=dist, prev_integral=dist_integral,
-#                                            prev_param=prev_dist)
-#     ret = min(weight_d * dist_PID, max_angle)
-#
-#     prev_dist = dist
-#     return ret
-
 
 clock = pygame.time.Clock()
 loop = True
@@ -179,9 +125,7 @@ while loop:
 
     draw_path(brushSize=30)
     car.draw()
-    # if len(points) > 1:
-        # angle = PID(perp, dist)
-        # car.turn(angle)
+
     if not car.is_set and len(points) > 1:
         car.set_car()
     pygame.display.flip()
