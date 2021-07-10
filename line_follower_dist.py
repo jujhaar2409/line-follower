@@ -78,17 +78,17 @@ prev_y = None
 
 
 # ignore this function: Helps in drawing the path
-def draw_path(brushSize=20, steps=200):
+def draw_path(brush_size=20, steps=200):
     global prev_x
     global prev_y
 
     x, y = pygame.mouse.get_pos()
-    pygame.draw.circle(screen, PAINT, (x, y), brushSize)
+    pygame.draw.circle(screen, PAINT, (x, y), brush_size)
 
     click = pygame.mouse.get_pressed(3)
     if click[0] == 1:
         if 0 <= x <= WIDTH and 0 <= y <= HEIGHT:
-            pygame.draw.circle(canvas, PAINT, (x, y), brushSize)
+            pygame.draw.circle(canvas, PAINT, (x, y), brush_size)
 
         if prev_x is not None:
             diff_x = x - prev_x
@@ -100,7 +100,7 @@ def draw_path(brushSize=20, steps=200):
                 for _ in range(steps):
                     prev_x += dx
                     prev_y += dy
-                    pygame.draw.circle(canvas, PAINT, (round(prev_x), round(prev_y)), brushSize)
+                    pygame.draw.circle(canvas, PAINT, (round(prev_x), round(prev_y)), brush_size)
                     points.append(pygame.math.Vector2(prev_x, prev_y))
         prev_x = x
         prev_y = y
@@ -123,7 +123,7 @@ while loop:
         if event.type == pygame.QUIT:
             loop = False
 
-    draw_path(brushSize=30)
+    draw_path(brush_size=30)
     car.draw()
 
     if not car.is_set and len(points) > 1:
