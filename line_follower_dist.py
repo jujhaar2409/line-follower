@@ -109,6 +109,10 @@ def draw_path(brush_size=20, steps=200):
         prev_y = None
 
 
+def PID():
+    return 0
+
+
 clock = pygame.time.Clock()
 loop = True
 car = Car(screen)
@@ -125,6 +129,10 @@ while loop:
 
     draw_path(brush_size=30)
     car.draw()
+
+    if len(points) > 1 and car.is_set:
+        angle = PID()
+        car.turn(angle)
 
     if not car.is_set and len(points) > 1:
         car.set_car()
