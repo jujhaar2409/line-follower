@@ -15,11 +15,11 @@ pygame.display.set_icon(icon)
 backgroundImg = pygame.image.load("track.png")
 
 # bot
-botImg = pygame.image.load("bot.jpg")
+botImg = pygame.image.load(os.path.join('imgs', 'bot.jpg'))
 botCurrent = pygame.Vector2()
 botCurrent.xy = 146, 320
 botEarlier = pygame.Vector2()
-botEarlier.xy = 146, 320.2
+botEarlier.xy = 146, 322
 botVel = pygame.Vector2()  # (velocity) vector along direction of bot
 botVelPer = pygame.Vector2()  # perpendicular vector to botVel
 botSize = 60  # diameter of bot
@@ -62,9 +62,9 @@ def PID(errorNew, errorEarlier):
     global derivative, integral
     derivative = errorNew - errorEarlier
     integral += errorNew
-    Kp = 0.005
-    Kd = 0.00000001
-    Ki = 0.0000001
+    Kp = 0.003
+    Kd = 0.0000001
+    Ki = 0.000001
     drift_vel = Kp * errorNew + Kd * derivative + Ki * integral
     return drift_vel
 
@@ -97,6 +97,10 @@ while running:
     drift_Vel = PID(errorNew, errorEarlier)
 
     screen.blit(botImg, (botCurrent.x - botSize / 2, botCurrent.y - botSize / 2))
+
+    if botCurrent.x <= 0 or botCurrent.x >= 800 or botCurrent.y <= 0 or botCurrent.y >= 600:
+        botVel = [0, 0]
+        botVelPer = [0, 0]
 
     botEarlier = botCurrent
     if pygame.math.Vector2.magnitude(botVel) > 1:
