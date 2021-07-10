@@ -36,15 +36,15 @@ TIME_PER_FRAME = 50
 
 class Car:
     def __init__(self, surface):
-        self.direction = pygame.Vector2(1, 0)
-        self.is_set = False
-        self.pos = pygame.math.Vector2(100, 400)
-        self.theta = 0
-        self.surface = surface
-        self.speed = 1.5
-        self.radius = 15
-        self.img_original = pygame.transform.scale(pygame.image.load(os.path.join('imgs', 'car.png')), (100, 100))
-        self.img = self.img_original
+        self.direction = pygame.Vector2(1, 0)  # direction of car
+        self.is_set = False  # is the car set to the initial position(based on path drawn)
+        self.pos = pygame.math.Vector2(100, 400)  # position of the center of the car
+        self.theta = 0  # angle of the car with positive x
+        self.surface = surface  # surface on which car is drawn
+        self.speed = 1.5  # speed of the car
+        self.img_original = pygame.transform.scale(pygame.image.load(os.path.join('imgs', 'car.png')),
+                                                   (100, 100))  # the original image of the car
+        self.img = self.img_original  # the current image to be drawn
 
     def draw(self):
         if len(points) > 1:
@@ -79,11 +79,13 @@ class Car:
                 self.is_set = True
                 return
 
+
 prev_x = None
 prev_y = None
 
 
-def airbrush(brushSize=20, steps=200):
+# ignore this function
+def draw_path(brushSize=20, steps=200):
     global prev_x
     global prev_y
 
@@ -131,7 +133,7 @@ def get_perp(pos):
     return the_perp, the_dist
 
 
-def get_PID_expr(Ki, Kp, Kd, param, prev_param, prev_integral, max_derivative = math.inf):
+def get_PID_expr(Ki, Kp, Kd, param, prev_param, prev_integral, max_derivative=math.inf):
     derivative = Kd * min((param - prev_param) / TIME_PER_FRAME, max_derivative)
     integral = prev_integral + Ki * (param - prev_param) * TIME_PER_FRAME
     proportion = Kp * param
@@ -153,7 +155,8 @@ def PID(perp, dist):
     max_angle = 0.025
     weight_d = 1
 
-    dist_PID, dist_integral = get_PID_expr(Kp=0.01, Kd=3, Ki=0, param=dist,prev_integral=dist_integral,  prev_param=prev_dist)
+    dist_PID, dist_integral = get_PID_expr(Kp=0.01, Kd=3, Ki=0, param=dist, prev_integral=dist_integral,
+                                           prev_param=prev_dist)
     ret = min(weight_d * dist_PID, max_angle)
 
     prev_dist = dist
@@ -174,7 +177,7 @@ while loop:
         if event.type == pygame.QUIT:
             loop = False
 
-    airbrush(brushSize=30)
+    draw_path(brushSize=30)
     car.draw()
     if len(points) > 1:
         perp, dist = get_perp(car.pos)
