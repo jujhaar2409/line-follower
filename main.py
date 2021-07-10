@@ -76,6 +76,7 @@ class Car:
             if (point - points[0]).magnitude() != 0:
                 self.direction = point - points[0]
                 self.direction /= self.direction.magnitude()
+                self.turn(math.atan2(self.direction.y, self.direction.x))
                 self.is_set = True
                 return
 
@@ -179,7 +180,7 @@ while loop:
 
     draw_path(brushSize=30)
     car.draw()
-    if len(points) > 1:
+    if len(points) > 1 and car.is_set:
         perp, dist = get_perp(car.pos)
         angle = PID(perp, dist)
         car.turn(angle)
