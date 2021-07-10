@@ -5,11 +5,12 @@ Your task is to add a PID controller to control the movement of the car and make
 
 ## Get Started
 
-Download the file main.py from this repo and then open a terminal at the location of the file and do the following
+Download the repo as a zip and expand it. Now open a terminal inside the directory week 2. Then type the following commands to run the code.
 
 ```bash
 pip install pygame
 python line_follower_dist.py
+python line_follower_color.py
 ```
 
 ## Resources
@@ -32,10 +33,14 @@ Two methods of solving this problem are listed below. You can use one of them or
 In this method a few, say 3(try and see if more or less work better), sensors are placed in front of the car. Each of the sensors collects data about the color below(pygame has this functionality) and based on that the car is made to turn right or left.
 Watch this video for reference: [video](https://www.youtube.com/watch?v=bL0MmeQhpAQ)
 
+The starter code for this type is in the file `line_follower_color.py`.
+
 ### Distance Method
 
 This method makes use of sensors to find the distance of the car from a certain reference and then the controller decides how much to turn and which direction.
 Watch this video for an explanation of how a more advanced type this method works: [video](https://youtu.be/4Y7zG48uHRo)
+
+The starter code for this type is in the file `line_follower_dist.py`.
 
 ## Attribution
 
