@@ -28,6 +28,8 @@ You don't need to watch the whole playlist, this is just to refresh a few key co
 
 Two methods of solving this problem are listed below. You can use one of them or possibly even come up with your own method to tackle this problem.
 
+Some extra details for each method are given in the comments in the respective files.
+
 ### Color Sensor Method
 
 In this method a few, say 3(try and see if more or less work better), sensors are placed in front of the car. Each of the sensors collects data about the color below(pygame has this functionality) and based on that the car is made to turn right or left.

@@ -1,3 +1,27 @@
+# Hello! Welcome to the week 2 assignment!
+
+# This file contains the starter code for the method related to distance from path.
+# Your goal with this file will be to implement the PID part of the project.
+
+# If you run the file now(python line_follower_dist.py) you should be able to see
+# the environment for drawing and the car ready.
+
+# You can draw a path using your mouse starting from any point on the canvas and the
+# car should accordingly reposition and start moving along a straight line.
+
+# It is your job to make the car follow the line, all on its own, without any help
+# from you!
+
+# Certain functions in this file deal with stuff that you do not need to bother much
+# about, since they deal with the aesthetics, getting pygame to work, etc.
+# I have mentioned something like "Ignore this function" or similar near those.
+
+# Contrary to the above, there are certain parts of the code that you must study
+# carefully in order to complete your implementation properly. For example
+# understanding the usage of some methods/properties of the class Car will be important.
+
+# Now go over to the PID() function and read on.
+
 import pygame
 import math
 import os
@@ -28,12 +52,23 @@ pygame.display.flip()
 mouse = pygame.mouse
 canvas = screen.copy()
 
+# This variable is pivotal to the program
+# It contains a list(similar to an array from cpp) of all the points in the path as drawn
+# by the mouse of the user.
+# This is pretty much our definition of the path. You can use this to calculate distance,
+# angle, etc. There are many ways to implement functions to find each of these so don't
+# be afraid to experiment.
+# Now head over to the while loop at the bottom of the file.
 points = []
 
 THRESHOLD = 0.001
 TIME_PER_FRAME = 50
 
 
+# Important methods and properties
+# 1. Car.turn(theta)
+# 2. Car.direction
+# 3. Car.pos
 class Car:
     def __init__(self, surface):
         self.direction = pygame.Vector2(1, 0)  # direction of car
@@ -77,7 +112,7 @@ prev_x = None
 prev_y = None
 
 
-# ignore this function: Helps in drawing the path
+# Ignore this function completely: Helps in drawing the path with mouse
 def draw_path(brush_size=20, steps=200):
     global prev_x
     global prev_y
@@ -111,8 +146,21 @@ def draw_path(brush_size=20, steps=200):
 
 def PID():
     return 0
+    # This function will contain the meat of your program. You have to design this function
+    # to return the angle by which the car should rotate to follow along the path.
+    # Think about what parameters you could input, the one I tried was perpendicular distance,
+    # but you might also want to try and come up with your own ideas.
+    # The parameter will provide you an error term and then you follow standard PID.
+    # Now head over to the definition of the points variable towards the top of the file
 
 
+# This is the game loop, where all the magic happens.
+# This loop will keep running while the game is still on the screen. Now the important part
+# that you need to pay attention to is the if condition inside of which PID() and car.turn(angle)
+# are called.
+# If you are going to be calculating some parameters as input for your PID function then you may
+# calculate them right before the call to PID() and take them as params.
+# Now you should be all set to get working on the project, best of luck!
 clock = pygame.time.Clock()
 loop = True
 car = Car(screen)
