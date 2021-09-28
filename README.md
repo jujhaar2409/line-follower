@@ -1,4 +1,12 @@
-# Line Follower
+# Line Follower 
+
+## Purpose
+
+This project is an assignment that was designed for the controls bootcamp under Technical Summer School at IIT Bombay. The main repo can be found [here](https://github.com/erciitb/tss-controls-theory). The main goal of it was to get the participants to implement the theoretical knowledge on their own to test their level of understanding.
+
+_The solutions can be found in the branches jujhaar and Tejas for the distance and color method respectively_
+
+## About
 
 The filed python files contain starter environments in which you have to add your own code. 
 
