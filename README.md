@@ -8,7 +8,7 @@ _The solutions can be found in the branches jujhaar and Tejas for the distance a
 
 ## About
 
-The filed python files contain starter environments in which you have to add your own code. 
+The python files contain starter environments in which you have to add your own code. 
 
 Your task is to add a PID controller to control the movement of the car/robot and make it follow the drawn path.
 
